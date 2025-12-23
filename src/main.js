@@ -2,7 +2,7 @@ import EventEmitter from './event-emitter.js';
 import { GS1 } from '@point-of-sale/barcode-parser';
 
 import * as Comlink from 'comlink';
-import { setZXingModuleOverrides, readBarcodesFromImageData } from "zxing-wasm/reader";
+import { prepareZXingModule, readBarcodes } from "zxing-wasm/reader";
 import '@interactjs/actions/drag';
 import '@interactjs/auto-start';
 import interact from '@interactjs/interact';
@@ -362,7 +362,7 @@ class WebcamBarcodeScanner {
 		}
 
 		if (!this.#options.useWorker || workerFailed) {
-			setZXingModuleOverrides({
+			prepareZXingModule({
 				locateFile: (path, prefix) => {
 				  if (path.endsWith(".wasm")) {
 					return this.#options.binaryPath;
@@ -372,7 +372,7 @@ class WebcamBarcodeScanner {
 				},
 			});
 
-			this.#runFallbackDetector(readBarcodesFromImageData);
+			this.#runFallbackDetector(readBarcodes);
 		}
 	}
 

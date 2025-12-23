@@ -1,11 +1,11 @@
 import * as Comlink from 'comlink';
-import { setZXingModuleOverrides, readBarcodesFromImageData } from "zxing-wasm/reader";
+import { prepareZXingModule, readBarcodes } from "zxing-wasm/reader";
 
 
 /* Initialize the ZXing module */
 
 async function initialize(options) {
-    setZXingModuleOverrides({
+    prepareZXingModule({
         locateFile: (path, prefix) => {
             if (path.endsWith(".wasm")) {
                 return options.binaryPath;
@@ -21,7 +21,7 @@ async function initialize(options) {
 
 async function decodeBarcode(imageData, options) {
     try {
-        return await readBarcodesFromImageData(imageData, options);
+        return await readBarcodes(imageData, options);
     }
     catch(err) {
         return null;

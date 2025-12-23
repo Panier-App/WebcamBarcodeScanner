@@ -36,7 +36,7 @@
     "build": "rollup -c && npm run copy",
     "dev": "rollup -c -w",
     "copy": "cp ./node_modules/zxing-wasm/dist/reader/zxing_reader.wasm ./dist/webcam-barcode-scanner.wasm",
-    "link": "npm link @point-of-sale/barcode-parser"  
+    "link": "npm link @point-of-sale/barcode-parser"
   },
   "files": [
     "dist"
@@ -51,6 +51,6 @@
     "@surma/rollup-plugin-off-main-thread": "^2.2.3",
     "comlink": "^4.4.1",
     "interactjs": "^1.10.27",
-    "zxing-wasm": "^1.2.15"
+    "zxing-wasm": "^2.2.4"
   }
 }
