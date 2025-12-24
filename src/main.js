@@ -38,6 +38,7 @@ class WebcamBarcodeScanner {
 			workerPath: 	null,
 			binaryPath:		null,
 			preview: 		{},
+			location:       'front'
 		}, options);
 
 		this.#options.resolution = Object.assign({
@@ -167,7 +168,7 @@ class WebcamBarcodeScanner {
 		}
 
         if (stream) {
-			let location = 'front';
+			let location = this.#options.location;
 			let tracks = stream.getVideoTracks();
 
 			for (let track of tracks) {
@@ -185,7 +186,7 @@ class WebcamBarcodeScanner {
 			this.#internal.stream = stream;
 			this.#internal.current = previousDevice.deviceId;
 
-			this.#state.mirrored = location == 'front';
+			this.#state.mirrored = location == this.#options.location;
 
 			await this.#enumerate();
 
@@ -214,7 +215,7 @@ class WebcamBarcodeScanner {
 
         if (stream) {
 			let deviceId = null;
-			let location = 'front';
+			let location = this.#options.location;
 
 			let tracks = stream.getVideoTracks();
 
@@ -237,7 +238,7 @@ class WebcamBarcodeScanner {
 			this.#internal.stream = stream;
 			this.#internal.current = deviceId;
 
-			this.#state.mirrored = location == 'front';
+			this.#state.mirrored = location == this.#options.location;
 
 			await this.#enumerate();
 
@@ -497,9 +498,9 @@ class WebcamBarcodeScanner {
 	async #enumerate() {
 		let devices = await navigator.mediaDevices.enumerateDevices();
 
-		for (let device of devices) {
+		for (const device of devices) {
 			if (device.kind == 'videoinput') {
-				let location = 'front';
+				let location = this.#options.location;
 
 				if (device.getCapabilities) {
 					let capabilities = device.getCapabilities();
@@ -615,7 +616,7 @@ class WebcamBarcodeScanner {
 		/* Switch state */
 
 		this.#state.playing = false;
-		this.#state.mirrored = device.location == 'front';
+		this.#state.mirrored = device.location == this.#options.location;
 			
 		/* Open a new stream */
 

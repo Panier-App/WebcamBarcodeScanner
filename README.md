@@ -113,6 +113,16 @@ const barcodeScanner = new WebcamBarcodeScanner({
 });
 ```
 
+### Change default camera location
+
+By default this library will use the `front` camera. If you are wish to use the `back` camera as the default, maybe for a better UX on mobile devices, then you can do so like this:
+
+```js
+const barcodeScanner = new WebcamBarcodeScanner({
+    location: 'back'
+});
+```
+
 ### Preview window
 
 This library will show a small preview overlay on top of the current webpage with a view of your webcam. This will allow you to easily position the barcode in the right spot. 
